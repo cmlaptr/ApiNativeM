@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+</head>
+<body>
+    <ul>
+        <li>
+            <label>Name</label>
+            <input type="text" id="name">
+        </li>
+        <li>
+            <label>Username</label>
+            <input type="text" id="username">
+        </li>
+        <li>
+            <label>Password</label>
+            <input type="password" id="password">
+        </li>
+        <li>
+            <label>Ulangi Password</label>
+            <input type="password" id="password_confirm">
+        </li>
+        <li>
+            <button type="submit" onclick="registerNow()">Register</button>
+        </li>
+    </ul>
+
+    <script>
+        function registerNow(){
+            let name = document.getElementById("name").value;
+            let username = document.getElementById("username").value;
+            let password = document.getElementById("password").value;
+            let password_confirm = document.getElementById("password_confirm").value;
+ 
+            if(password_confirm === password){
+                fetch("http://127.0.0.1:8000/api/users/store.php", {
+                        method: "POST",
+                        headers: {
+                            'Content-Type' : 'application/json'
+                        },
+                        body: JSON.stringify({name, username, password})
+                    })
+                    .then(response => response.json())
+                    .then(data => console.log(data.message))
+                    .catch(error=> console.log(error));    
+            }
+        }
+ 
+    </script>
+</body>
+</html>
